@@ -3,6 +3,10 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+const PIXEL_RATIO = 0.5;
+const TARGET_FPS = 24;
+const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
 const AuroraBackground = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -14,21 +18,31 @@ const AuroraBackground = () => {
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     } catch {
-      // WebGL not supported — fallback is handled by the parent Suspense/fallback
       return;
     }
 
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    renderer.setPixelRatio(1);
+    renderer.setSize(
+      Math.floor(window.innerWidth * PIXEL_RATIO),
+      Math.floor(window.innerHeight * PIXEL_RATIO)
+    );
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.display = "block";
+
     container.appendChild(renderer.domElement);
 
     const material = new THREE.ShaderMaterial({
       uniforms: {
         iTime: { value: 0 },
         iResolution: {
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+          value: new THREE.Vector2(
+            Math.floor(window.innerWidth * PIXEL_RATIO),
+            Math.floor(window.innerHeight * PIXEL_RATIO)
+          ),
         },
       },
       transparent: true,
@@ -78,9 +92,9 @@ const AuroraBackground = () => {
 
           float f = 2.0 + fbm(p + vec2(iTime * 5.0, 0.0)) * 0.5;
 
-          for (float i = 0.0; i < 35.0; i++) {
+          for (float i = 0.0; i < 18.0; i++) {
             v = p + cos(i * i + (iTime + p.x * 0.08) * 0.025 + i * vec2(13.0, 11.0)) * 3.5 + vec2(sin(iTime * 3.0 + i) * 0.003, cos(iTime * 3.5 - i) * 0.003);
-            float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - (i / 35.0));
+            float tailNoise = fbm(v + vec2(iTime * 0.5, i)) * 0.3 * (1.0 - (i / 18.0));
             vec4 auroraColors = vec4(
               0.1 + 0.3 * sin(i * 0.2 + iTime * 0.4),
               0.3 + 0.5 * cos(i * 0.3 + iTime * 0.5),
@@ -88,7 +102,7 @@ const AuroraBackground = () => {
               1.0
             );
             vec4 currentContribution = auroraColors * exp(sin(i * i + iTime * 0.8)) / length(max(v, vec2(v.x * f * 0.015, v.y * 1.5)));
-            float thinnessFactor = smoothstep(0.0, 1.0, i / 35.0) * 0.6;
+            float thinnessFactor = smoothstep(0.0, 1.0, i / 18.0) * 0.6;
             o += currentContribution * (1.0 + tailNoise * 0.8) * thinnessFactor;
           }
 
@@ -103,25 +117,56 @@ const AuroraBackground = () => {
     scene.add(mesh);
 
     let frameId: number;
-    const animate = () => {
-      material.uniforms.iTime.value += 0.016;
-      renderer.render(scene, camera);
+    let lastTime = 0;
+
+    const animate = (timestamp: number) => {
       frameId = requestAnimationFrame(animate);
+      const delta = timestamp - lastTime;
+      if (delta < FRAME_INTERVAL) return;
+      lastTime = timestamp - (delta % FRAME_INTERVAL);
+      material.uniforms.iTime.value += 0.042;
+      renderer.render(scene, camera);
     };
-    animate();
+
+    lastTime = 0;
+    frameId = requestAnimationFrame(animate);
 
     const handleResize = () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      material.uniforms.iResolution.value.set(
-        window.innerWidth,
-        window.innerHeight
-      );
+      const w = Math.floor(window.innerWidth * PIXEL_RATIO);
+      const h = Math.floor(window.innerHeight * PIXEL_RATIO);
+      renderer.setSize(w, h);
+      material.uniforms.iResolution.value.set(w, h);
     };
     window.addEventListener("resize", handleResize);
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(frameId);
+      } else {
+        lastTime = 0;
+        frameId = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          lastTime = 0;
+          frameId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(frameId);
+        }
+      },
+      { threshold: 0.01 }
+    );
+    observer.observe(container);
 
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      observer.disconnect();
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
