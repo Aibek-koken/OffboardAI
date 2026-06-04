@@ -19,17 +19,16 @@ export default function CtaSection() {
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-bg via-bg/70 to-bg" />
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center lg:px-8">
-        <p className="section-eyebrow">Next step</p>
+        <p className="section-eyebrow">ГОТОВЫ НАЧАТЬ</p>
         <h2 className="font-heading text-4xl font-extrabold tracking-tight text-text md:text-6xl">
-          Если инженер уходит сейчас, документ нужен до его последнего дня.
+          Есть увольнение прямо сейчас?
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-text-muted">
-          Запустим пилот без интеграций: согласуем роли, проведём интервью и
-          передадим первый Role Technical Passport за 24 часа после созвона.
+          Напишите нам. Мы запустим первую сессию в течение 48 часов.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a href="mailto:founders@offboard.ai?subject=OffboardAI%20pilot" className="btn-primary px-8 py-4 text-lg">
-            Написать о пилоте <ArrowRight aria-hidden="true" size={19} />
+            Запустить пилот за $1,500 <ArrowRight aria-hidden="true" size={19} />
           </a>
           <span className="font-mono text-sm text-text-muted">
             founders@offboard.ai

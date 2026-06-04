@@ -33,7 +33,7 @@ export default function Footer() {
           ))}
         </nav>
         <p className="font-mono text-xs text-text-muted">
-          © 2026 OffboardAI
+          © 2025 OffboardAI
         </p>
       </div>
     </footer>

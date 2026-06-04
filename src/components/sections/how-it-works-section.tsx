@@ -7,23 +7,23 @@ import { useRef } from "react";
 const steps = [
   {
     icon: Mic2,
-    title: "30-минутный Zoom",
-    text: "Интервьюер ведёт уходящего инженера по техническому шаблону: системы, риски, решения, ручные процессы.",
+    title: "Zoom-интервью 30 минут",
+    text: "Структурированное голосовое интервью по специальному шаблону. Уходящий инженер говорит — мы фиксируем.",
   },
   {
     icon: MessageSquareText,
-    title: "Транскрипция и DLP",
-    text: "Текст очищается от секретов и паттернов ключей. Мы фиксируем логику, а не доступы.",
+    title: "AI-транскрипция и анализ",
+    text: "Аудио транскрибируется. DLP-фильтр автоматически удаляет пароли, токены и API-ключи.",
   },
   {
     icon: FileCheck2,
-    title: "Генерация паспорта",
-    text: "ИИ и редактор собирают Role Technical Passport в Markdown с секциями, понятными преемнику.",
+    title: "Генерация Role Technical Passport",
+    text: "GPT-4 структурирует знания в 7-секционный Markdown-документ по вашему корпоративному глоссарию.",
   },
   {
     icon: Send,
-    title: "Лёгкий апрув и передача",
-    text: "Сотрудник быстро подтверждает точность, после чего CTO получает документ для GitHub, GitLab или Notion.",
+    title: "Апрув и передача CTO",
+    text: "Инженер делает один лёгкий апрув. Вы получаете документ, готовый для GitHub / GitLab / Notion.",
   },
 ];
 
@@ -40,13 +40,13 @@ export default function HowItWorksSection() {
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-3xl">
-          <p className="section-eyebrow">Concierge MVP</p>
+          <p className="section-eyebrow">КАК ЭТО РАБОТАЕТ</p>
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-text md:text-5xl">
-            Ценность доказывается без тяжёлого продукта.
+            От увольнения до документа — 4 шага
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            Первая версия — ручной консьерж-сервис с ИИ в середине процесса.
-            Это быстрее валидирует боль и качество финального артефакта.
+            Запускается одним созвоном. Без внедрения софта, без настройки SSO,
+            без обучения команды.
           </p>
         </div>
 

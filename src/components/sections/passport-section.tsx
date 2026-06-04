@@ -3,32 +3,43 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
-const passportText = `# Role Technical Passport — ML Platform Lead
+const passportText = `# Role Technical Passport — Senior ML Engineer
 
 ## 1. Зоны ответственности
-- inference-gateway: latency budgets, fallback routing
-- model-registry: release approvals and rollback rules
-- weekly manual check: stale embeddings report
+- ML Pipeline (репозиторий: ml-pipeline-v2)
+- Feature Store интеграция с Feast
+- Мониторинг дрейфа модели (Evidently AI)
 
-## 2. Скрытые риски и техдолг
-- batch reindex job fails silently above 1.8M records
-- old provider contract has undocumented 429 behavior
-- feature flag "fast-path-v2" should not be enabled before load test
+## 2. Карта систем
+- PostgreSQL (prod) → Feature Store → Training Pipeline → S3
+- Внешние API: OpenAI, Cohere, Weights & Biases
 
-## 3. Архитектурное обоснование
-Redis stream was chosen over Kafka because the team needed operational
-simplicity during the seed-stage rewrite. Revisit after enterprise rollout.
+## 3. ⚠️ Скрытые риски и техдолг
+- Ретрейн модели падает при >500k записей (OOM) — обходной путь: ручной батчинг
+- Cron-job для очистки S3 не настроен — делается вручную каждый понедельник
 
-## 4. Открытые вопросы
-- Who owns vector DB cost alerts after the handoff?
-- Should region failover stay manual for the next quarter?`;
+## 4. Архитектурные обоснования
+Выбрали Feast вместо самописного Feature Store в Q2 2024 исходя из требований
+к versioning и team size. Решение не задокументировано.
+
+## 5. Регулярные скрытые задачи
+- [ ] Каждый понедельник: aws s3 sync команда (см. скрипт /scripts/sync.sh)
+- [ ] Раз в месяц: ротация ключей Weights & Biases вручную
+
+## 6. Ключевые контакты
+- DevOps по инфраструктуре: @alexk (Slack)
+- Data Platform: Артём Васильев (подрядчик)
+
+## 7. Открытые вопросы
+- Миграция на новую версию Feast не завершена
+- A/B тест модели v3 vs v4 не задокументирован`;
 
 const badges = [
   "Зоны ответственности",
   "Карта систем",
-  "Скрытые риски",
+  "Скрытые риски и техдолг",
   "Архитектурные решения",
-  "Регулярные задачи",
+  "Регулярные скрытые задачи",
   "Ключевые контакты",
   "Открытые вопросы",
 ];
@@ -65,14 +76,13 @@ export default function PassportSection() {
       <div className="absolute -right-24 top-28 h-80 w-80 rounded-full bg-accent-2/10 blur-3xl" />
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
         <div>
-          <p className="section-eyebrow">The artifact</p>
+          <p className="section-eyebrow">ЧТО ВЫ ПОЛУЧАЕТЕ</p>
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-text md:text-5xl">
-            Финальный результат — не запись, а технический паспорт роли.
+            Что вы получаете: Role Technical Passport
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            Markdown-документ можно положить в репозиторий, GitLab wiki или
-            Notion. Он помогает новому владельцу роли понять контекст без
-            просмотра часов видео.
+            Готовый Markdown-документ с 7 разделами. Открывается в GitHub за 1 секунду.
+            Живёт в вашем репозитории, GitLab wiki или Notion.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {badges.map((badge) => (

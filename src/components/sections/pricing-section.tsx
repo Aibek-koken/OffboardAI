@@ -4,17 +4,17 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const pilotFeatures = [
-  "3 увольнения или передачи роли",
-  "Ручная настройка глоссария компании",
-  "Консьерж-интервью и редактура",
-  "Markdown-паспорт за 24 часа",
+  "3 сессии (3 увольнения)",
+  "Полная ручная настройка корпоративного глоссария",
+  "Консьерж-сопровождение",
+  "Результат за 24 часа",
 ];
 
 const sessionFeatures = [
-  "Фиксированная цена после пилота",
-  "Лимитированные сессии по потребности",
-  "Единый формат для всех ролей",
-  "Готовность к годовой подписке",
+  "Неограниченные сессии",
+  "Годовая подписка",
+  "API-интеграция (roadmap)",
+  "Корпоративный SSO (roadmap)",
 ];
 
 function FeatureList({ items }: { items: string[] }) {
@@ -38,13 +38,13 @@ export default function PricingSection() {
       <div className="absolute left-1/2 top-24 h-96 w-96 -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="section-eyebrow">Pricing</p>
+          <p className="section-eyebrow">ЦЕНА</p>
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-text md:text-5xl">
-            Пилот покупается как страхование релиза, не как HR-софтина.
+            Простая и честная цена
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            Цена привязана к стоимости потери контекста: несколько недель
-            senior-времени дороже, чем структурированная передача роли.
+            Стоимость одного дня простоя команды из 5 инженеров
+            из-за потери контекста &gt; $2,500. Пилот окупается с первой сессии.
           </p>
         </div>
 
@@ -60,18 +60,18 @@ export default function PricingSection() {
               Рекомендовано
             </div>
             <p className="font-mono text-sm uppercase tracking-[0.18em] text-accent">
-              Pilot package
+              ПИЛОТ
             </p>
             <h3 className="mt-5 font-heading text-2xl font-bold text-text">
-              $1,500 за 3 увольнения
+              $1,500
             </h3>
             <p className="mt-4 leading-7 text-text-muted">
-              Подходит, когда ключевой инженер уже уходит в ближайшие две
-              недели и нужно быстро сохранить контекст.
+              Включает 3 сессии для 3 увольнений. Полная настройка глоссария
+              и консьерж-сопровождение на каждом этапе.
             </p>
             <FeatureList items={pilotFeatures} />
             <a href="mailto:founders@offboard.ai?subject=OffboardAI%20pilot" className="btn-primary mt-9 w-full justify-center">
-              Забронировать пилот <ArrowRight aria-hidden="true" size={18} />
+              Начать пилот → <ArrowRight aria-hidden="true" size={18} />
             </a>
           </motion.article>
 
@@ -83,18 +83,18 @@ export default function PricingSection() {
             className="rounded-3xl border border-white/[0.07] bg-white/[0.03] p-8"
           >
             <p className="font-mono text-sm uppercase tracking-[0.18em] text-text-muted">
-              After pilot
+              ЗА СЕССИЮ
             </p>
             <h3 className="mt-5 font-heading text-2xl font-bold text-text">
-              $500 за сессию
+              $500 / интервью
             </h3>
             <p className="mt-4 leading-7 text-text-muted">
-              Для команд, которым нужен повторяемый процесс передачи технических
-              ролей без запуска полноценного knowledge-management проекта.
+              После пилота. Годовая подписка с неограниченными сессиями,
+              API-интеграцией и корпоративным SSO.
             </p>
             <FeatureList items={sessionFeatures} />
             <a href="#cta" className="btn-secondary mt-9 w-full justify-center">
-              Обсудить подписку <ArrowRight aria-hidden="true" size={18} />
+              Обсудить условия <ArrowRight aria-hidden="true" size={18} />
             </a>
           </motion.article>
         </div>

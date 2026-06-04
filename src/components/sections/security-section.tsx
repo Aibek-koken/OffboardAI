@@ -1,23 +1,23 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { EyeOff, ShieldCheck, Trash2 } from "lucide-react";
+import { MicOff, ShieldCheck, Trash2 } from "lucide-react";
 
 const securityItems = [
   {
-    icon: EyeOff,
-    title: "Интерфейсный барьер",
-    text: "Перед интервью сотрудник видит жёсткое предупреждение: не произносить пароли, токены и API-ключи.",
+    icon: Trash2,
+    title: "Аудио не хранится",
+    text: "Запись сессии существует только во время транскрипции. После — автоматически удаляется.",
+  },
+  {
+    icon: MicOff,
+    title: "Транскрипты удаляются",
+    text: "Текстовые данные удаляются сразу после генерации документа. Мы не храним ваши технические детали.",
   },
   {
     icon: ShieldCheck,
-    title: "DLP-редактура",
-    text: "Паттерны, похожие на секреты, приватные ключи и токены, заменяются на [REDACTED] до сборки документа.",
-  },
-  {
-    icon: Trash2,
-    title: "Минимизация данных",
-    text: "Аудио не хранится. Транскрипт удаляется после генерации и апрува Role Technical Passport.",
+    title: "DLP-фильтрация",
+    text: "Автоматически вырезаем паттерны паролей, токенов и API-ключей в реальном времени [REDACTED].",
   },
 ];
 
@@ -28,13 +28,13 @@ export default function SecuritySection() {
     <section id="security" className="bg-bg py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="section-eyebrow">Security by default</p>
+          <p className="section-eyebrow">БЕЗОПАСНОСТЬ</p>
           <h2 className="font-heading text-3xl font-extrabold tracking-tight text-text md:text-5xl">
-            Мы фиксируем логику, а не доступы.
+            Безопасность — не опция, а архитектурное решение
           </h2>
           <p className="mt-6 text-lg leading-8 text-text-muted">
-            MVP спроектирован под минимизацию чувствительных данных: меньше
-            хранения, меньше поверхности атаки, меньше организационного трения.
+            Мы проектируем под минимальную поверхность атаки: меньше хранения,
+            меньше данных, меньше трения для security-комплаенса.
           </p>
         </div>
 
@@ -63,10 +63,10 @@ export default function SecuritySection() {
         </div>
 
         <div className="mt-8 rounded-3xl border border-amber-300/25 bg-amber-300/10 p-6 text-amber-100">
-          <p className="font-semibold">Предупреждение перед интервью</p>
+          <p className="font-semibold">⚠️ Перед интервью</p>
           <p className="mt-2 leading-7 text-amber-100/85">
             Запрещено называть вслух пароли, токены и API-ключи. Инструмент
-            фиксирует архитектурную логику, процессы и риски — не секреты.
+            фиксирует логику, а не доступы.
           </p>
         </div>
       </div>
